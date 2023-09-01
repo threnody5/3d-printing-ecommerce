@@ -1,0 +1,26 @@
+.navigation-container {
+  background-color: whitesmoke;
+  padding: 1rem 0 1rem 0;
+}
+
+.navigation-container__links {
+  /* position: fixed; */
+  /* top: 0; */
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1600px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* This won't be necessary when this is turned into a link */
+.navigation-container__cart {
+  margin-right: 1rem;
+}
+
+.navigation-container a {
+  padding: 0rem 0.5rem;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
