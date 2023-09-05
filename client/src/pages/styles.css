@@ -1,0 +1,31 @@
+.printer-container__ender3v2,
+.printer-container__prusa-mk4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 5rem 0;
+}
+
+.printer-container__elegoo-saturn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 5rem 0;
+}
+
+.printer-container-paragraph__ender3v2,
+.printer-container-paragraph__elegoo-saturn,
+.printer-container-paragraph__prusa-mk4 {
+  width: 600px;
+  font-size: 20px;
+  margin: 0 2rem 0 2rem;
+}
+
+.printer-image__ender3v2,
+.printer-image__elegoo-saturn,
+.printer-image__prusa-mk4 {
+  width: 400px;
+  border-radius: 5px;
+}
