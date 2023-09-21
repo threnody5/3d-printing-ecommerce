@@ -1,5 +1,5 @@
 const OurStory = () => {
-  return <>Our Story</>;
+  return <main>Our Story</main>;
 };
 
 export default OurStory;
