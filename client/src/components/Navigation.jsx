@@ -12,8 +12,14 @@ const Navigation = () => {
           <Link to='/our-story'>Our Story</Link>
           <Link to='/reviews'>Reviews</Link>
           <Link to='/rewards'>Rewards</Link>
+          <Link to='/products'>Products</Link>
         </div>
-        <div className='navigation-container__cart'>cart and account</div>
+        <div>
+          <div className='navigation-container__cart_account'>
+            <Link to='/cart'>Cart</Link>
+            <Link to='/account'>Account</Link>
+          </div>
+        </div>
       </div>
     </nav>
   );

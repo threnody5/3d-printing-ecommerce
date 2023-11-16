@@ -5,6 +5,9 @@ import Reviews from './pages/Reviews';
 import Rewards from './pages/Rewards';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import Products from './pages/Products';
+import Cart from './pages/Cart';
+import Account from './pages/Account';
 import './index.css';
 
 export const router = createBrowserRouter([
@@ -44,6 +47,36 @@ export const router = createBrowserRouter([
       <div className='app'>
         <Navigation />
         <Rewards />
+        <Footer />
+      </div>
+    ),
+  },
+  {
+    path: '/products',
+    element: (
+      <div className='app'>
+        <Navigation />
+        <Products />
+        <Footer />
+      </div>
+    ),
+  },
+  {
+    path: '/cart',
+    element: (
+      <div className='app'>
+        <Navigation />
+        <Cart />
+        <Footer />
+      </div>
+    ),
+  },
+  {
+    path: '/account',
+    element: (
+      <div className='app'>
+        <Navigation />
+        <Account />
         <Footer />
       </div>
     ),
