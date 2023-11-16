@@ -42,3 +42,17 @@
 .our-story-container__paragraph {
   font-size: 20px;
 }
+
+.reviews-container {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
+  justify-content: space-between;
+}
+
+.reviews-container div {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+}
