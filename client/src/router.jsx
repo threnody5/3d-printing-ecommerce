@@ -8,6 +8,8 @@ import Footer from './components/Footer';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Account from './pages/Account';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import './index.css';
 
 export const router = createBrowserRouter([
@@ -77,6 +79,26 @@ export const router = createBrowserRouter([
       <div className='app'>
         <Navigation />
         <Account />
+        <Footer />
+      </div>
+    ),
+  },
+  {
+    path: '/sign-in',
+    element: (
+      <div className='app'>
+        <Navigation />
+        <SignIn />
+        <Footer />
+      </div>
+    ),
+  },
+  {
+    path: '/sign-up',
+    element: (
+      <div className='app'>
+        <Navigation />
+        <SignUp />
         <Footer />
       </div>
     ),

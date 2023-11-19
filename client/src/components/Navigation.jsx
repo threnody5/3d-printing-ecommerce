@@ -17,7 +17,8 @@ const Navigation = () => {
         <div>
           <div className='navigation-container__cart_account'>
             <Link to='/cart'>Cart</Link>
-            <Link to='/account'>Account</Link>
+            {/* <Link to='/account'>Account</Link> */}
+            <Link to='/sign-in'>Sign In</Link>
           </div>
         </div>
       </div>
