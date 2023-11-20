@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const router = require('./routes/images');
+const imageRouter = require('./routes/images');
+const userRouter = require('./routes/newUser');
 
-app.use(cors());
-app.use('/', router);
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+};
+
+app.use(express.json());
+app.use(cors(corsOptions));
+app.use('/', imageRouter, userRouter);
 
 const PORT = 3000;
 
