@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { createUser } from '../api/create-user';
 
 import './styles.css';
 
@@ -9,8 +9,9 @@ const SignUp = () => {
   const [password, setPassword] = useState('Temppassword1!');
   const [reEnterPassword, setReEnterPassword] = useState('Temppassword1!');
   const [errormessage, setErrorMessage] = useState([]);
+  const [successMessage, setSuccessMessage] = useState();
 
-  const createAccountHandler = (e) => {
+  const createAccountHandler = async (e) => {
     e.preventDefault();
 
     setErrorMessage([]);
@@ -26,23 +27,26 @@ const SignUp = () => {
       if (passwordStrength.test(password)) {
         console.log('Password is strong enough');
 
-        const data = {
+        const userData = {
           emailAddress: emailAddress,
           password: password,
         };
 
-        //TODO: Probably find a way of salting the password before sending it to the server.
-        //TODO: Move this API call into a function and store in the api directory.
-        axios
-          .post(`${import.meta.env.VITE_BASE_API_URL}create-user`, data, {
-            withCredentials: true,
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        try {
+          const response = await createUser(userData);
+          console.log('Response Data: ', response.data.message);
+
+          if (response.status === 201) {
+            setSuccessMessage(response.data.message);
+            console.log("It's Good!");
+
+            setTimeout(() => {
+              setSuccessMessage('');
+            }, 5000);
+          }
+        } catch (error) {
+          console.error('Error: ', error);
+        }
       } else {
         validate.push(
           'Password is not strong enough. Please include at least one lowercase letter, one uppercase letter, one number, and a minimum length of 6 characters.'
@@ -56,6 +60,7 @@ const SignUp = () => {
 
   return (
     <main className='signup-container__main'>
+      {successMessage && <div>{successMessage}</div>}
       {errormessage.length > 0 && <div>{errormessage}</div>}
       <h2 className='signup-container__title'>Create Account</h2>
       <form

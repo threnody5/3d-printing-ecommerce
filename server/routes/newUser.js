@@ -5,7 +5,11 @@ const router = express.Router();
 //TODO: When password is salted, unsalt password here. Research if unsalted password should be stored in the database, I doubt that though.
 router.post('/create-user', (req, res, next) => {
   const { emailAddress, password } = req.body;
-  res.status(200).send({ message: 'the app is working!' });
+
+  //TODO: If account is successfully created on MySQL database, this is response to front end.
+  res.status(201).send({ message: 'Account successfully created.' });
+
+  //TODO: If account already exists, send error 409 with message.
 });
 
 module.exports = router;
