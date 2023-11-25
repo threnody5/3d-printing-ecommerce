@@ -11,13 +11,12 @@ const connection = mysql.createConnection({
   database: process.env.MYSQL_DATABASE,
 });
 
-//TODO: When password is salted, unsalt password here. Research if unsalted password should be stored in the database, I doubt that though.
 router.post('/create-user', (req, res, next) => {
   const { emailAddress, password } = req.body;
 
   bcrypt.hash(password, saltRounds, (error, hash) => {
     if (error) {
-      console.error('Error Hashing Password: ', error);
+      console.error('Error Hashing Password For New Account Creation: ', error);
       res
         .status(500)
         .send({ message: 'Internal Server Error. Please try again. ' });
@@ -30,10 +29,18 @@ router.post('/create-user', (req, res, next) => {
       };
 
       connection.query(`INSERT INTO users SET ?`, data, (error, results) => {
-        if (error) {
-          //TODO: Figure out a way to specify if the email address already exists as a user name, if so then send an error back to the user.
-          console.error('Error Adding User: ', error);
-          res.status(409).send({ message: 'Error Adding User.' });
+        if (error?.errno === 1062) {
+          console.error('User Already Exists: ', error);
+          res.status(409).send({
+            message:
+              'Error adding user with that email address. That email address is already is use.',
+          });
+        } else if (error) {
+          console.error('An Error Has Occurred: ', error);
+          res.status(500).send({
+            message:
+              'An error has occurred creating the account. Please try again.',
+          });
         } else {
           console.log('User Successfully Added.');
           res.status(201).send({ message: 'User Successfully Added.' });

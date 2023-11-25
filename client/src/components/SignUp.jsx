@@ -25,8 +25,6 @@ const SignUp = () => {
       );
 
       if (passwordStrength.test(password)) {
-        console.log('Password is strong enough');
-
         const userData = {
           emailAddress: emailAddress,
           password: password,
@@ -34,17 +32,13 @@ const SignUp = () => {
 
         try {
           const response = await createUser(userData);
-          console.log('Response Data: ', response.data.message);
+          setSuccessMessage(response.data.message);
 
-          if (response.status === 201) {
-            setSuccessMessage(response.data.message);
-            console.log("It's Good!");
-
-            setTimeout(() => {
-              setSuccessMessage('');
-            }, 5000);
-          }
+          setTimeout(() => {
+            setSuccessMessage('');
+          }, 5000);
         } catch (error) {
+          validate.push(error.response.data.message);
           console.error('Error: ', error);
         }
       } else {
@@ -61,7 +55,7 @@ const SignUp = () => {
   return (
     <main className='signup-container__main'>
       {successMessage && <div>{successMessage}</div>}
-      {errormessage.length > 0 && <div>{errormessage}</div>}
+      {errormessage && <div>{errormessage}</div>}
       <h2 className='signup-container__title'>Create Account</h2>
       <form
         className='signup-container__form'
