@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const imageRouter = require('./routes/images');
 const userRouter = require('./routes/newUser');
+const login = require('./routes/login');
 
 const corsOptions = {
   origin: 'http://localhost:5173',
@@ -12,7 +13,7 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use('/', imageRouter, userRouter);
+app.use('/', imageRouter, userRouter, login);
 
 const PORT = 3000;
 
