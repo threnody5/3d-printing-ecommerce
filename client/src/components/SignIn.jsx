@@ -22,6 +22,10 @@ const SignIn = () => {
 
     try {
       const response = await login(userData);
+      console.log('Response: ', response);
+      // if (response.data.loggedIn === true) {
+
+      // }
     } catch (error) {
       validate.push(error.response.data.message);
     }
