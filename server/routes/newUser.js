@@ -1,15 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
+const connection = require('./dbConfig');
 const saltRounds = 10;
-
-const connection = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-});
 
 router.post('/create-user', (req, res, next) => {
   const { emailAddress, password } = req.body;

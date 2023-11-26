@@ -19,7 +19,6 @@ const SignUp = () => {
     const validate = [];
 
     if (password === reEnterPassword) {
-      console.log('Passwords are the same');
       const passwordStrength = new RegExp(
         '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{6,}$'
       );

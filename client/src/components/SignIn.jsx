@@ -4,15 +4,12 @@ import { login } from '../api/login';
 
 import './styles.css';
 const SignIn = () => {
-  const [emailAddress, setEmailAddress] = useState('test1@test.com');
+  const [emailAddress, setEmailAddress] = useState('test9@test.com');
   const [password, setPassword] = useState('Temppassword1!');
   const [errorMessage, setErrorMessage] = useState();
 
   const loginUser = async (e) => {
     e.preventDefault();
-
-    console.log('Email Address:', emailAddress);
-    console.log('Password: ', password);
 
     setErrorMessage([]);
 
@@ -23,10 +20,8 @@ const SignIn = () => {
       password: password,
     };
 
-    console.log('User Data: ', userData);
-
     try {
-      await login(userData);
+      const response = await login(userData);
     } catch (error) {
       validate.push(error.response.data.message);
     }
@@ -35,6 +30,7 @@ const SignIn = () => {
 
   return (
     <main className='signin-container__main'>
+      {errorMessage && <div>{errorMessage}</div>}
       <h2 className='signin-container__title'>Sign In</h2>
       <form className='signin-container__form'>
         <label className='signin-container__label'>

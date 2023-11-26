@@ -100,7 +100,8 @@
   color: rgb(46, 108, 110);
 }
 
-.signup-container__button {
+.signup-container__button,
+.signin-container__button {
   color: white;
   background-color: rgb(46, 108, 110);
   padding: 0.5rem 3rem;
@@ -108,7 +109,8 @@
   border-radius: 2px;
 }
 
-.signup-container__button-container {
+.signup-container__button-container,
+.signin-container__button_container {
   display: flex;
   justify-content: center;
 }
