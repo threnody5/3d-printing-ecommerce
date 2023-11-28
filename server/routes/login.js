@@ -3,11 +3,12 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const connection = require('./dbConfig');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+// const crypto = require('crypto');
 
-const generateRandomString = () => {
-  return crypto.randomBytes(16).toString('hex');
-};
+// ? Will only be useful if the crypto string is also sent to the client, to compare the jwt created here against the cookie.
+// const generateRandomString = () => {
+//   return crypto.randomBytes(16).toString('hex');
+// };
 
 router.post('/login', (req, res, next) => {
   const { emailAddress, password } = req.body;
@@ -23,23 +24,25 @@ router.post('/login', (req, res, next) => {
       const userPassword = results[0].userPassword;
 
       bcrypt.compare(password, userPassword, (error, results) => {
-        if (results === true) {
-          const randomString = generateRandomString();
-          console.log('Random String: ', randomString);
-          //TODO: Correct error with expiresIn option, causing server to crash.
-          const token = jwt.sign(emailAddress, randomString, {
-            expiresIn: 86400000,
+        if (error) {
+          console.error('Error Validating Password: ', error);
+          res
+            .status(500)
+            .send({ message: 'Internal Server Error. Please try again.' });
+        } else if (results === true) {
+          const token = jwt.sign({ userID: userID }, 'test', {
+            expiresIn: '24h',
           });
-          console.log('Token: ', token);
           res.cookie('access_token', token, {
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            httpOnly: true,
+            httpOnly: false,
           });
           res.status(200).send({ message: 'Authentication Successful' });
-        } else {
+        } else if (results === false) {
+          console.error('Incorrect Password');
+
           res.status(401).send({
-            message:
-              'Incorrect Username or password. Please check and login again. ',
+            message: 'Incorrect Username or password. ',
           });
         }
       });

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../api/login';
+import { readCookie } from '../api/read-cookie';
+import { decodeJWT } from '../api/decode-jwt';
 
 import './styles.css';
 const SignIn = () => {
@@ -21,14 +23,22 @@ const SignIn = () => {
     };
 
     try {
-      const response = await login(userData);
-      console.log('Response: ', response);
-      // if (response.data.loggedIn === true) {
+      await login(userData);
+      const userCookie = await readCookie('access_token');
+      //TODO: Create separate component to handle reading the value of the cookie, so it's not tied to the user logging in.
+      //TODO: Set the state for the cookie, using redux so entire application has access to values.
+      const decodedJWT = decodeJWT(userCookie);
 
-      // }
+      console.log('Decoded JWT: ', decodedJWT);
+
+      //TODO: Create a component to check if the cookie has expired. If so, user is redirected to the login page.
+      const secondServerCookieValue = readCookie('access_token');
+
+      console.log('UC Cookie Value From Server: ', secondServerCookieValue);
     } catch (error) {
       validate.push(error.response.data.message);
     }
+
     setErrorMessage(validate);
   };
 
