@@ -1,22 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../api/login';
-import { readCookie } from '../api/read-cookie';
-import { decodeJWT } from '../api/decode-jwt';
+import { authStatus } from '../api/auth-status';
+import { useDispatch } from 'react-redux';
+import { setAuthState } from '../authentication/authSlice';
 
 import './styles.css';
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [emailAddress, setEmailAddress] = useState('test9@test.com');
   const [password, setPassword] = useState('Temppassword1!');
   const [errorMessage, setErrorMessage] = useState();
 
   const loginUser = async (e) => {
+    // Prevents default behavior for form.
     e.preventDefault();
 
+    // Clears the error messages on login attempt, clearing previous errors if any.
     setErrorMessage([]);
 
+    // Empty array for errors to be pushed to.
     const validate = [];
 
+    // User data object created user credentials to be sent to server via POST request.
     const userData = {
       emailAddress: emailAddress,
       password: password,
@@ -24,17 +30,12 @@ const SignIn = () => {
 
     try {
       await login(userData);
-      const userCookie = await readCookie('access_token');
-      //TODO: Create separate component to handle reading the value of the cookie, so it's not tied to the user logging in.
-      //TODO: Set the state for the cookie, using redux so entire application has access to values.
-      const decodedJWT = decodeJWT(userCookie);
 
-      console.log('Decoded JWT: ', decodedJWT);
+      const userID = authStatus();
 
-      //TODO: Create a component to check if the cookie has expired. If so, user is redirected to the login page.
-      const secondServerCookieValue = readCookie('access_token');
+      dispatch(setAuthState(userID));
 
-      console.log('UC Cookie Value From Server: ', secondServerCookieValue);
+      // //TODO: Create a component to check if the cookie has expired. If so, user is redirected to the login page.
     } catch (error) {
       validate.push(error.response.data.message);
     }

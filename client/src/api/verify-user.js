@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 /**
- * Function to send a POST request to create a new user via the server API.
- * @param {Object} userData - The data for creating a new user (e.g., email, password).
+ * Function to verify a user's existence or validity by sending a POST request to the server.
+ * @param {string} userID - The unique identifier of the user to verify.
  * @returns {Promise} A Promise that resolves with the response data if successful, otherwise rejects with an error.
  */
-const createUser = async (userData) => {
+const verifyUser = async (userID) => {
   try {
-    // Send a POST request to create a new user via the server API.
+    // Send a POST request to verify the user's existence or validity.
     const response = await axios.post(
-      `${import.meta.env.VITE_BASE_API_URL}create-user`, // API endpoint for creating a user.
-      userData, // User data for creating a new user.
+      `${import.meta.env.VITE_BASE_API_URL}verify-user`, // API endpoint for user verification.
+      userID, // User ID to be verified.
       {
         withCredentials: true, // Include credentials (cookies) in the request.
       }
@@ -24,4 +24,4 @@ const createUser = async (userData) => {
   }
 };
 
-export { createUser };
+export { verifyUser };
